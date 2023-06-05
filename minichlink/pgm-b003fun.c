@@ -1,6 +1,10 @@
 #include <stdint.h>
 #include "hidapi.h"
 #include "minichlink.h"
+#include <string.h>
+#include <stdlib.h>
+
+#include <unistd.h>
 
 
 struct B003FunProgrammerStruct
@@ -64,18 +68,22 @@ static int B003FunBlockWrite64( void * dev, uint32_t address_to_write, uint8_t *
 
 static int B003FunWriteHalfWord( void * dev, uint32_t address_to_write, uint16_t data )
 {
+	return 0;
 }
 
 static int B003FunReadHalfWord( void * dev, uint32_t address_to_read, uint16_t * data )
 {
+	return 0;
 }
 
 static int B003FunWriteByte( void * dev, uint32_t address_to_write, uint8_t data )
 {
+	return 0;
 }
 
 static int B003FunReadByte( void * dev, uint32_t address_to_read, uint8_t * data )
 {
+	return 0;
 }
 
 
@@ -99,11 +107,9 @@ static void WriteOp4( struct B003FunProgrammerStruct * eps, uint32_t opsend )
 static void CommitOp( struct B003FunProgrammerStruct * eps )
 {
 }
-	CommitOp( eps );
 
 
-
-void * TryInit_ESP32S2CHFUN()
+void * TryInit_B003Fun()
 {
 	#define VID 0x1209
 	#define PID 0xb003
@@ -137,7 +143,7 @@ void * TryInit_ESP32S2CHFUN()
 	MCF.BlockWrite64 = B003FunBlockWrite64;
 
 	// Alert programmer.
-	ResetOp( eps )
+	ResetOp( eps );
 	WriteOp4( eps, 0x00b02023 );  //sw a1, 0       ; stop execution
 	WriteOp4( eps, 0x00008067 );  //jalr x0, x1, 0 ; ret
 	CommitOp( eps );
